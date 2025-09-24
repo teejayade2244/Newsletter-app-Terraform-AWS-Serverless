@@ -5,13 +5,13 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/dist/${each.value.zip_key}"
   source_dir  = var.lambda_source_dir
 
-  dynamic "excludes" {
+  dynamic "exclude" {
     for_each = setsubtract(
       ["auth-handler.js", "newsletter-handler.js", "authorizer.js"],
       [replace(each.value.handler, ".handler", ".js")]
     )
     content {
-      filename = excludes.value
+      filename = exclude.value
     }
   }
 
